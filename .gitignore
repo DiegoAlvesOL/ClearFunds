@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# JSON database files (you can remove these if using Git for test data)
+data/*.json
+
+# IDE
+.vscode/
+.idea/
+
+# Virtual env
+venv/
+.env
+
+# Firebase credentials (do not push this!)
+firebase/firebase_credentials.json
