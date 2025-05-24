@@ -1,5 +1,6 @@
 from models.merchant import Merchant
-from services.merchant_service import save_merchant
+from services.merchant_service import save_merchant, merchant_exists
+
 
 print("+","-"*17,"+")
 print("| Welcome ClearFund |")
@@ -22,11 +23,16 @@ while True:
 
     elif choice == "1":
         id_CF = int(input("enter with your ID with : "))
-        company_name = str(input("Enter with your company name: "))
+
+        if merchant_exists(id_CF):
+            print("Merchant with ID {} already exists! Registration canceled. ".format(id_CF))
+            continue
+
+        company_name = str(input("Enter with your company name: ")).strip().title()
         company_number = int(input("Enter with your company_number: "))
-        vat_number = str(input("Enter with your vat number: "))
+        vat_number = str(input("Enter with your vat number: ")).strip().title()
         tax_number = float(input("Enter with your tax number: "))
-        bank_info = str(input("Enter with your bank account: "))
+        bank_info = str(input("Enter with your bank account: ")).strip().title()
 
         merchant_obj = Merchant(id_CF,company_name, company_number,vat_number, tax_number,bank_info)
         save_merchant(merchant_obj)
