@@ -15,3 +15,5 @@ venv/
 
 # Firebase credentials (do not push this!)
 firebase/firebase_credentials.json
+
+*.iml
