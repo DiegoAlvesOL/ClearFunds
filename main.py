@@ -1,6 +1,6 @@
 from models.merchant import Merchant
 from models.transaction import Transaction
-from services.merchant_service import save_merchant, merchant_exists
+from services.merchant_service import save_merchant, merchant_exists, generate_id
 from services.transaction_service import save_transaction
 
 print("+","-"*17,"+")
@@ -24,20 +24,28 @@ while True:
         break
 # Data entry for merchant registration
     elif choice == "1":
-        id_CF = int(input("enter with your ID with : "))
+        id_CF = generate_id()
 
-        if merchant_exists(id_CF):
-            print("Merchant with ID {} already exists! Registration canceled. ".format(id_CF))
-            continue
+
+        # id_CF = int(input("enter with your ID with : "))
+        #
+        # if merchant_exists(id_CF):
+        #     print("Merchant with ID {} already exists! Registration canceled. ".format(id_CF))
+        #     continue
 
         company_name = input("Enter the company name (e.g., ClearFunds Ltd.): ").strip().title()
         company_number = int(input("Enter the company registration number (numeric only – e.g., 123456789): "))
-        vat_number = input("Enter the VAT number (e.g., BR123456789): ").strip().upper()
-        fee_rate = float(input("Enter the transaction fee percentage as a decimal (e.g., 0.025 for 2.5%): "))
+        if merchant_exists(company_number):
+            print("\nMerchant with Company number {} already exists! Registration cancelad. \n".format(company_number))
+            continue
+        vat_number = input("Enter the VAT number (e.g., IE123456789A): ").strip().upper()
+        # fee_rate = float(input("Enter the transaction fee percentage as a decimal (e.g., 0.025 for 2.5%): "))
+        debit_fee = float(input("Enter the percentage of the debit transaction fee (e.g., 0.025 for 2.5%) "))
+        credit_fee = float(input("Enter the percentage of the credit transaction fee (e.g., 0.025 for 2.5%) "))
         bank_info = input("Enter the bank account details (e.g., BankName 1234-5 / Agency 0001): ").strip()
 
 
-        merchant_obj = Merchant(id_CF,company_name, company_number,vat_number, fee_rate1,bank_info)
+        merchant_obj = Merchant(id_CF,company_name, company_number,vat_number,debit_fee, credit_fee,bank_info)
         save_merchant(merchant_obj)
         print("\nMerchant registered successfully!\n")
 

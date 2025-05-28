@@ -1,103 +1,116 @@
-# Transaction Fields Documentation (ISO 8583 inspired)
+# Transaction Schema – ClearFund
 
-## Field Name: mti
-**Description:** Indicates the type of ISO 8583 message being sent or received.  
-**Format:** 4-digit numeric code
+This document describes the structure and purpose of each field used to register a transaction within the ClearFund platform. The model is inspired by ISO 8583, a standard used in electronic payment systems.
 
-**Type:** int
+---
 
+## Field: `mti`
+**Description:** Message Type Indicator (MTI) based on ISO 8583 standard.  
+**Format:** 4-digit numeric code (e.g., 0200, 0420)  
+**Type:** int  
+**Purpose:** Indicates the type of transaction message (e.g., purchase, reversal). Defined by ClearFund according to the operation.
 **Example Values:**
 - 0200: Financial transaction request
 - 0220: Financial transaction response
 - 0420: Reversal request
 - 0430: Reversal response
+
 ---
 
-## Field Name: transaction_datetime
-**Description:** Date and time the transaction was sent to the platform.  
-**Format:** ISO 8601 string or datetime object (e.g., "2025-05-24T14:30:00Z")  
-**Type:** str
+## Field: `transaction_datetime`
+**Description:** Date and time when the transaction occurred.  
+**Format:** ISO 8601 string (e.g., "2025-05-24T14:30:00Z")  
+**Type:** str  
+**Purpose:** Represents the moment the transaction was performed by the merchant. Supplied by the platform integrated with ClearFund.
+
 ---
 
-## Field Name: stan
-**Description:** Unique sequential number to trace the transaction (System Trace Audit Number).  
-**Format:** 6-digit numeric code  
-**Type:** int
+## Field: `stan`
+**Description:** System Trace Audit Number (STAN), a sequential identifier for the transaction as defined in ISO 8583.  
+**Format:** Integer up to 6 digits (e.g., 123456)  
+**Type:** int  
+**Purpose:** Unique sequential number to track the transaction. Supplied by the integrated platform (POS, gateway, or TEF).
+
 ---
 
-## Field Name: settlement_date
-**Description:** Date when the transaction is scheduled to be settled.  
-**Format:** YYYY-MM-DD (e.g., "2025-05-26")  
-**Type:** str
+## Field: `mcc`
+**Description:** Merchant Category Code representing the merchant's business activity.  
+**Format:** 4-digit string (e.g., "5411")  
+**Type:** str  
+**Purpose:** Business classification according to ISO 18245 (e.g., 5411 = grocery stores). Supplied by the integrated platform.
+
 ---
 
-## Field Name: mcc
-**Description:** Merchant Category Code – numeric code representing the merchant's business type.  
-**Format:** 4-digit code (e.g., 5411 for grocery stores)  
-**Type:** str
+## Field: `auth_code`
+**Description:** Authorization code returned by the acquiring network (e.g., Visa, Mastercard).  
+**Format:** Alphanumeric string, up to 6 characters  
+**Type:** str  
+**Purpose:** Confirms transaction approval. Supplied by the platform integrated with the acquiring party.
+
 ---
 
-## Field Name: rrn
-**Description:** Retrieval Reference Number – unique identifier used in logs and reconciliations.  
-**Format:** 12-character alphanumeric string  
-**Type:** str
+## Field: `terminal_id`
+**Description:** Identifier of the terminal (POS, gateway, or TEF) that processed the transaction.  
+**Format:** Alphanumeric string (e.g., "ABC12345")  
+**Type:** str  
+**Purpose:** Identifies the physical or virtual terminal that originated the transaction. Supplied by the payment gateway or TEF provider.
+
 ---
 
-## Field Name: auth_code
-**Description:** Code returned by the acquirer indicating approval of the transaction.  
-**Format:** Typically 6-character alphanumeric string  
-**Type:** str
+## Field: `merchant_id`
+**Description:** Unique identifier of the merchant.  
+**Format:** UUID or alphanumeric string  
+**Type:** str  
+**Purpose:** Links the transaction to the merchant previously registered in ClearFund. Supplied by the integration platform or internal system.
+
 ---
 
-## Field Name: terminal_id
-**Description:** ID of the POS/TEF terminal where the transaction was processed.  
-**Format:** Alphanumeric string  
-**Type:** str
+## Field: `currency_code`
+**Description:** Numeric currency code used in the transaction.  
+**Format:** 3-digit string (e.g., "986" for BRL, "978" for EUR)  
+**Type:** str  
+**Purpose:** Indicates the currency in accordance with ISO 4217. Supplied by the integration platform.
+
 ---
 
-## Field Name: merchant_id
-**Description:** Unique identifier for the merchant (must be pre-registered).  
-**Format:** UUID or alphanumeric ID  
-**Type:** str
+## Field: `original_data`
+**Description:** Reference to the original transaction in cases such as cancellations or refunds.  
+**Format:** Integer (e.g., 123456)  
+**Type:** int  
+**Purpose:** Should contain the `stan` of the original sale transaction. Supplied by the integration platform.
+
 ---
 
-## Field Name: currency_code
-**Description:** ISO 4217 numeric representation of the transaction currency.  
-**Format:** 3-digit number (e.g., 986 for BRL)  
-**Type:** str
+## Field: `instalment_count`
+**Description:** Number of installments for the transaction.  
+**Format:** Integer ≥ 1  
+**Type:** int  
+**Purpose:** Indicates how many installments the total amount was split into. Supplied by the integration platform.
+
 ---
 
-## Field Name: original_data
-**Description:** Reference to the original transaction (used in reversals or chargebacks).  
-**Format:** Alphanumeric string or UUID  
-**Type:** str (optional)
----
-
-## Field Name: fees
-**Description:** Transaction fee applied by the acquirer or processor.  
-**Format:** Decimal value (e.g., 2.50)  
-**Type:** float
----
-
-## Field Name: cf_transaction_id
-**Description:** Internal ID generated by the ClearFunds platform.  
-**Format:** UUID or system-generated string  
-**Type:** str
----
-
-## Field Name: instalment_count
-**Description:** Number of instalments the transaction is split into.  
-**Format:** Integer >= 1  
-**Type:** int
----
-
-## Field Name: instalment_amount
-**Description:** Value of each instalment.  
+## Field: `instalment_amount`
+**Description:** Amount of each installment.  
 **Format:** Decimal (e.g., 100.00)  
-**Type:** float
+**Type:** float  
+**Purpose:** Value charged in each installment. Supplied by the integration platform.
+
 ---
 
-## Field Name: total_amount
-**Description:** Total transaction amount (instalment_amount * instalment_count).  
+## Field: `total_amount`
+**Description:** Total amount of the transaction (instalment_amount * instalment_count).  
 **Format:** Decimal (e.g., 300.00)  
-**Type:** float
+**Type:** float  
+**Purpose:** Total value of the transaction. Supplied by the integration platform.
+
+---
+
+## 🛑 Removed Fields
+
+| Field               | Reason for Removal                                                                 |
+|---------------------|-------------------------------------------------------------------------------------|
+| `cf_transaction_id` | Replaced by `stan`, which already serves as a unique identifier and follows ISO 8583. |
+| `rrn`               | Redundant with `stan` and `auth_code`.                                              |
+| `fees`              | Fees will be dynamically derived from the registered merchant profile.              |
+| `settlement_date`   | Settlement will be calculated based on business rules (e.g., D+2 for debit, D+30 for credit). |
+| `responsável`       | Subjective field with no technical need at this stage of transaction registration.   |
