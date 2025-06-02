@@ -8,7 +8,7 @@ This document describes the structure and purpose of each field used to register
 **Description:** Unique internal identifier for the merchant in the ClearFund platform.  
 **Format:** Numeric value (manual entry)  
 **Example:** `101`  
-**Type:** `int`
+**Type:** `str`
 
 ---
 
