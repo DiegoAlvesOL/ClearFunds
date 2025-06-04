@@ -1,5 +1,8 @@
 import json
 import os.path
+import random
+import string
+
 # Define os caminhos para os arquivos JSON utilizados
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH = os.path.join(BASE_DIR, "../data/transactions.json")
@@ -33,6 +36,20 @@ def get_merchant_by_id(merchant_id):
         if merchant.get("id_CF") == merchant_id:
             return merchant
     return None
+
+def generate_id_stan ():
+    letter_digits_id = string.ascii_uppercase + string.digits
+
+    id_for_transaction = ""
+    prefix_id = "CF"
+
+    for prefix in range (12):
+        id_for_transaction = id_for_transaction + random.choice(letter_digits_id)
+
+    return prefix_id + id_for_transaction
+
+
+
 
 # Processa uma transação recebida (verifica merchant, aplica fee, salva transação)
 def process_transaction(transactio_obj):

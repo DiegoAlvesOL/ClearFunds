@@ -1,7 +1,7 @@
 from models.merchant import Merchant
 from models.transaction import Transaction
 from services.merchant_service import save_merchant, merchant_exists, generate_id
-from services.transaction_service import save_transaction, process_transaction
+from services.transaction_service import save_transaction, process_transaction, generate_id_stan
 
 print("+","-"*17,"+")
 print("| Welcome ClearFund |")
@@ -66,7 +66,8 @@ while True:
         fee_rate = ""
         terminal_id = input("Enter the Terminal ID (e.g., POS/TEF terminal ID): ")
         transaction_datetime = input("Enter the transaction date and time (format: DD-MM-YYYY HH:MM:SS): ")
-        stan = int(input("Enter the STAN (System Trace Audit Number – unique sequential ID): "))
+        # stan = int(input("Enter the STAN (System Trace Audit Number – unique sequential ID): "))
+        stan = generate_id_stan()
         nsu = input("Enter the NSU (Unique Sequential Number provided by the acquirer/processor): ")
         auth_code = input("Enter the Authorization Code (from acquirer or processor): ")
         currency_code = input("Enter the Currency Code (e.g., 986 for BRL): ")
