@@ -21,14 +21,6 @@ def load_merchants():
                 return []
     return []
 
-# Retorna o merchant com base no número da empresa (company_number)
-def get_merchant_by_company_number(company_number):
-    merchants = load_merchants()
-    for merchant in merchants:
-        if merchant.get("company_number") == company_number:
-            return merchant
-    return None
-
 # Retorna o merchant com base no ID (id_CF)
 def get_merchant_by_id(merchant_id):
     merchants = load_merchants()
@@ -37,7 +29,7 @@ def get_merchant_by_id(merchant_id):
             return merchant
     return None
 
-def generate_id_stan ():
+def generate_id_transaction_id ():
     letter_digits_id = string.ascii_uppercase + string.digits
 
     id_for_transaction = ""
