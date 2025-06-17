@@ -7,7 +7,7 @@ class Transaction:
                  fee_rate,
                  terminal_id,
                  transaction_datetime,
-                 stan,
+                 transaction_id,
                  nsu,
                  auth_code,
                  currency_code,
@@ -23,7 +23,7 @@ class Transaction:
         self.fee_rate = fee_rate
         self.terminal_id = terminal_id
         self.transaction_datetime = transaction_datetime
-        self.stan = stan
+        self.transaction_id = transaction_id
         self.nsu = nsu
         self.auth_code = auth_code
         self.currency_code = currency_code
@@ -43,7 +43,7 @@ class Transaction:
             "fee_rate": self.fee_rate,
             "terminal_id": self.terminal_id,
             "transaction_datetime": self.transaction_datetime,
-            "stan": self.stan,
+            "transaction_id": self.transaction_id,
             "nsu": self.nsu,
             "auth_code": self.auth_code,
             "currency_code": self.currency_code,
