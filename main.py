@@ -1,7 +1,8 @@
 from models.merchant import Merchant
 from models.transaction import Transaction
 from services.merchant_service import save_merchant, merchant_exists, generate_id
-from services.transaction_service import save_transaction, process_transaction, generate_id_stan
+from services.transaction_service import save_transaction, process_transaction, generate_id_transaction_id
+from services.scheduler_service import generate_payment_schedule
 
 print("+","-"*17,"+")
 print("| Welcome ClearFund |")
@@ -13,10 +14,11 @@ while True:
     print("| 1 - Register new merchant", " "*4, "|")
     print("| 2 - List merchants", " "*11, "|")
     print("| 3 - Register new transaction", " ", "|")
+    print("| 4 - Generate payment schedule", "","|")
     print("| 0 - Exit ", " "*20, "|")
     print("+","-"*30,"+")
 
-    choice = input("Enter your choice 1, 2 or 0: ").strip()
+    choice = input("Enter your choice 1, 2, 3, 4 or 0: ").strip()
 
     if choice == "0":
         print("+","-"*43,"+")
@@ -59,7 +61,7 @@ while True:
 # Data entry to register transactions
     elif choice =="3":
         mti = int(input("Enter the MTI (Message Type Indicator) – e.g., 0200 for transaction request: "))
-        transaction_type = input("Enter with type of operation (e.g debit or credit): ")
+        transaction_type = input("Enter with type of operation (e.g debit or credit): ").lower()
         merchant_id = input("Enter the Merchant ID (must match an existing registered merchant): ")
         company_number = input("Enter the Company Number (corporate identifier of the merchant): ")
         mcc = input("Enter the Merchant Category Code (MCC – e.g., 5411 for grocery store): ")
@@ -67,7 +69,7 @@ while True:
         terminal_id = input("Enter the Terminal ID (e.g., POS/TEF terminal ID): ")
         transaction_datetime = input("Enter the transaction date and time (format: DD-MM-YYYY HH:MM:SS): ")
         # stan = int(input("Enter the STAN (System Trace Audit Number – unique sequential ID): "))
-        stan = generate_id_stan()
+        transaction_id = generate_id_transaction_id()
         nsu = input("Enter the NSU (Unique Sequential Number provided by the acquirer/processor): ")
         auth_code = input("Enter the Authorization Code (from acquirer or processor): ")
         currency_code = input("Enter the Currency Code (e.g., 986 for BRL): ")
@@ -78,11 +80,16 @@ while True:
 
 
         transaction_obj = Transaction(mti,transaction_type,  merchant_id, company_number, mcc,fee_rate, terminal_id, transaction_datetime,
-                                      stan, nsu, auth_code, currency_code, total_amount, instalment_count,
+                                      transaction_id, nsu, auth_code, currency_code, total_amount, instalment_count,
                                       instalment_amount, original_data)
         process_transaction(transaction_obj)
 
         print("\nTransaction registered successfully!\n")
+
+    elif choice == "4":
+        generate_payment_schedule()
+        print("Schedules successfully generated!")
+
 
     else:
         print("+","-"*67,"+")
