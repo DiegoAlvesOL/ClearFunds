@@ -1,10 +1,10 @@
-# 📄 Merchant Fields Documentation
+# Merchant Fields Documentation
 
 This document describes the structure and purpose of each field used to register a merchant in the ClearFund platform.
 
 ---
 
-## 🆔 Field Name: `id_CF`
+## Field Name: `id_CF`
 **Description:** Unique internal identifier for the merchant in the ClearFund platform.  
 **Format:** Numeric value (manual entry)  
 **Example:** `101`  
@@ -12,7 +12,7 @@ This document describes the structure and purpose of each field used to register
 
 ---
 
-## 🏢 Field Name: `company_name`
+## Field Name: `company_name`
 **Description:** Legal name of the company or merchant.  
 **Format:** Title-case string  
 **Examples:**
@@ -22,7 +22,7 @@ This document describes the structure and purpose of each field used to register
 
 ---
 
-## 🧾 Field Name: `company_number`
+## Field Name: `company_number`
 **Description:** Company’s official registration number.  
 **Format:** Numeric, no punctuation  
 **Examples:**
@@ -32,7 +32,7 @@ This document describes the structure and purpose of each field used to register
 
 ---
 
-## 💳 Field Name: `vat_number`
+## Field Name: `vat_number`
 **Description:** VAT or tax-related ID used in the country of operation.  
 **Format:** Uppercase alphanumeric  
 **Examples:**
@@ -42,7 +42,7 @@ This document describes the structure and purpose of each field used to register
 
 ---
 
-## 💰 Field Name: `debit_fee`
+## Field Name: `debit_fee`
 **Description:** Percentage fee to apply on **debit transactions**.  
 **Format:** Decimal value  
 **Example:** `0.015` (means 1.5%)  
@@ -50,7 +50,7 @@ This document describes the structure and purpose of each field used to register
 
 ---
 
-## 💳 Field Name: `credit_fee`
+## Field Name: `credit_fee`
 **Description:** Percentage fee to apply on **credit transactions**.  
 **Format:** Decimal value  
 **Example:** `0.025` (means 2.5%)  
@@ -58,7 +58,7 @@ This document describes the structure and purpose of each field used to register
 
 ---
 
-## 🏦 Field Name: `bank_info`
+## Field Name: `bank_info`
 **Description:** Bank account information where funds will be settled.  
 **Format:** Alphanumeric string (bank name, account and branch)  
 **Examples:**
