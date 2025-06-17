@@ -87,7 +87,7 @@ This project is a work in progress and will evolve as I continue to learn.
 ---
 
 ## 🇧🇷 Versão em Português
-ClearFunds é um projeto acadêmico voltado ao meu aprendizado de conceitos de desenvolvimento de sistemas. O objetivo é simular uma aplicação financeira real que realiza o cadastro de estabelecimentos e o processamento de transações, com regras de negócio aplicadas e geração de arquivos de liquidação — reproduzindo o ambiente de uma adquirente ou subadquirente.
+**ClearFunds** é um projeto acadêmico voltado ao meu aprendizado de conceitos de desenvolvimento de sistemas. O objetivo é simular uma aplicação financeira real que realiza o cadastro de estabelecimentos e o processamento de transações, com regras de negócio aplicadas e geração de arquivos de liquidação — reproduzindo o ambiente de uma adquirente ou subadquirente.
 
 O sistema também traz elementos típicos do setor de pagamentos, como referências a padrões ISO 8583, menções ao PCI/DSS e conceitos aplicáveis à indústria financeira.
 
