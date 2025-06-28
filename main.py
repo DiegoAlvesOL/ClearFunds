@@ -3,6 +3,7 @@ from models.transaction import Transaction
 from services.merchant_service import save_merchant, merchant_exists, generate_id
 from services.transaction_service import save_transaction, process_transaction, generate_id_transaction_id
 from services.scheduler_service import generate_payment_schedule
+from services.settlement_service import run_settlement_process
 
 print("+","-"*17,"+")
 print("| Welcome ClearFund |")
@@ -15,6 +16,7 @@ while True:
     print("| 2 - List merchants", " "*11, "|")
     print("| 3 - Register new transaction", " ", "|")
     print("| 4 - Generate payment schedule", "","|")
+    print("| 5 - Generate settlement file", " ", "|")
     print("| 0 - Exit ", " "*20, "|")
     print("+","-"*30,"+")
 
@@ -90,6 +92,8 @@ while True:
         generate_payment_schedule()
         print("Schedules successfully generated!")
 
+    elif choice == "5":
+        run_settlement_process()
 
     else:
         print("+","-"*67,"+")
