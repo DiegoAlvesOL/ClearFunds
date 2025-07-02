@@ -31,7 +31,7 @@ def filter_payments_due_today(payments):
     due_today = []
 
     for payment in payments:
-        if payment.get("payment_date") == today:
+        if payment.get("payment_date") <= today:
             due_today.append(payment)
 
     return due_today
