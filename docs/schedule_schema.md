@@ -95,7 +95,7 @@ In case of rounding differences, the last instalment is adjusted to match the `t
 **Description:** First 6 digits of the card used in the transaction.  
 **Purpose:** Used to derive the card brand.  
 **Type:** `str`  
-**Example:** `"453958"`
+**Example:** `"453958********2145"`
 
 ---
 
