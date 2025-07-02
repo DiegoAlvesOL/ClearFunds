@@ -1,7 +1,8 @@
 from models.merchant import Merchant
 from models.transaction import Transaction
 from services.merchant_service import save_merchant, merchant_exists, generate_id
-from services.transaction_service import save_transaction, process_transaction, generate_id_transaction_id
+from services.transaction_service import save_transaction, process_transaction, generate_id_transaction_id, \
+    infer_card_brand_from_bin
 from services.scheduler_service import generate_payment_schedule
 from services.settlement_service import run_settlement_process
 
@@ -78,12 +79,15 @@ while True:
         total_amount = float(input("Enter the Total Transaction Amount (e.g., 150.00): "))
         instalment_count = int(input("Enter the Number of Instalments (1 if no instalments): "))
         instalment_amount = float(input("Enter the Instalment Value (total value / number of instalments): "))
+        bin = input("Enter the BIN (first 6 digits + masked card, e.g., 453958******1212): ")
+        brand = infer_card_brand_from_bin(bin)
+        # brand = input("Enter the Card Brand (e.g., visa, mastercard, elo) – this will be validated by the system: ")
         original_data = input("If this is a reversal or related transaction, enter the Original STAN (optional): ")
 
 
         transaction_obj = Transaction(mti,transaction_type,  merchant_id, company_number, mcc,fee_rate, terminal_id, transaction_datetime,
                                       transaction_id, nsu, auth_code, currency_code, total_amount, instalment_count,
-                                      instalment_amount, original_data)
+                                      instalment_amount,bin,brand, original_data)
         process_transaction(transaction_obj)
 
         print("\nTransaction registered successfully!\n")
