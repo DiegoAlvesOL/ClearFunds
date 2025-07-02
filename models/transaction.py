@@ -14,6 +14,8 @@ class Transaction:
                  total_amount,
                  instalment_count,
                  instalment_amount,
+                 bin,
+                 brand,
                  original_data ):
         self.mti = mti
         self.transaction_type = transaction_type
@@ -30,6 +32,8 @@ class Transaction:
         self.total_amount = total_amount
         self.instalment_count = instalment_count
         self.instalment_amount = instalment_amount
+        self.bin = bin
+        self.brand = brand
         self.original_data = original_data
 
     # Converte o objeto Transaction em um dicionário (Usado para savar os arquivos .JSON)
@@ -50,5 +54,9 @@ class Transaction:
             "total_amount": self.total_amount,
             "instalment_count": self.instalment_count,
             "instalment_amount": self.instalment_amount,
+            "bin": self.bin,
+            "brand": self.brand,
             "original_data": self.original_data
         }
+
+

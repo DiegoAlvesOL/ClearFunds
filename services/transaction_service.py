@@ -10,11 +10,23 @@ BASE_DIR_UNLINKED = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_UNLINKED = os.path.join(BASE_DIR_UNLINKED, "../data/transaction_unlinked.json")
 BASE_DIR_MERCHANT = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_MERCHANT = os.path.join(BASE_DIR_MERCHANT,"../data/merchants.json")
+BASE_DIR_BIN = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH_BIN = os.path.join(BASE_DIR_BIN, "../data/card_bin.json")
 
 # Carrega todos os merchants salvos no arquivo merchants.json
 def load_merchants():
     if os.path.exists(FILE_PATH_MERCHANT):
         with open(FILE_PATH_MERCHANT, "r") as file:
+            try:
+                return json.load(file)
+            except json.JSONDecodeError:
+                return []
+    return []
+
+#Carrega a base de bin e bandeiras para função que valida qual é o bandeira correta apartir do bin informado.
+def load_card_bin():
+    if os.path.exists(FILE_PATH_BIN):
+        with open(FILE_PATH_BIN, "r") as file:
             try:
                 return json.load(file)
             except json.JSONDecodeError:
@@ -41,6 +53,14 @@ def generate_id_transaction_id ():
     return prefix_id + id_for_transaction
 
 
+def infer_card_brand_from_bin(bin):
+    bin_data = load_card_bin()
+    transaction_bin = bin[:6]
+
+    for entry in bin_data:
+        if entry.get("bin") == transaction_bin:
+            return entry.get("brand")
+    return "Unknown"
 
 
 # Processa uma transação recebida (verifica merchant, aplica fee, salva transação)
