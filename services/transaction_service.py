@@ -66,25 +66,23 @@ def infer_card_brand_from_bin(bin):
 # Processa uma transação recebida (verifica merchant, aplica fee, salva transação)
 def process_transaction(transactio_obj):
     transaction_data = transactio_obj.to_dict()
-    merchant_id = transaction_data.get("merchant_id")
+    merchant_id = transaction_data.get("merchant",{}).get("merchant_id")
 
     merchant = get_merchant_by_id(merchant_id)
 
 
     if merchant:
-        transaction_data["merchant_id"] = merchant.get("merchant_id")
-        # payment_load = transaction_data.get("merchant_id")
+        transaction_data["merchant"]["merchant_id"] = merchant.get("id_CF")
         payment_type = transaction_data.get("transaction_type")
 
         if payment_type == "credit":
-            transaction_data["fee_rate"] = merchant.get("credit_fee")
+            transaction_data["merchant"]["fee_rate"] = merchant.get("credit_fee")
         elif payment_type == "debit":
-            transaction_data["fee_rate"] = merchant.get("debit_fee")
+            transaction_data["merchant"]["fee_rate"] = merchant.get("debit_fee")
         else:
             save_transaction_unlinked(transaction_data)
             return
 
-        transaction_data["merchant_id"] = merchant.get("id_CF")
         save_transaction(transaction_data)
 
     else:
