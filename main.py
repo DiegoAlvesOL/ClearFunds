@@ -85,9 +85,24 @@ while True:
         original_data = input("If this is a reversal or related transaction, enter the Original STAN (optional): ")
 
 
-        transaction_obj = Transaction(mti,transaction_type,  merchant_id, company_number, mcc,fee_rate, terminal_id, transaction_datetime,
-                                      transaction_id, nsu, auth_code, currency_code, total_amount, instalment_count,
-                                      instalment_amount,bin,brand, original_data)
+        transaction_obj = Transaction(transaction_id,
+                                      mti,
+                                      transaction_type,
+                                      transaction_datetime,
+                                      terminal_id,
+                                      nsu,
+                                      auth_code,
+                                      currency_code,
+                                      total_amount,
+                                      merchant_id,
+                                      company_number,
+                                      mcc,
+                                      fee_rate,
+                                      instalment_count,
+                                      instalment_amount,
+                                      bin,
+                                      brand,
+                                      original_data)
         process_transaction(transaction_obj)
 
         print("\nTransaction registered successfully!\n")
