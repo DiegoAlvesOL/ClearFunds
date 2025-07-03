@@ -13,18 +13,18 @@ This document describes the structure and purpose of each field used to register
 
 | Field                 | Source / Origin             | Notes                                                                 |
 |-----------------------|------------------------------|-----------------------------------------------------------------------|
+| `transaction_id`      | Provided by integrator       | Unique identifier (ClearFund standard)                                |
 | `mti`                 | Provided by integrator       | ISO 8583 transaction type                                             |
 | `transaction_type`    | Provided by integrator       | "debit" or "credit"                                                   |
-| `merchant_id`         | Provided by integrator       | Must follow "CF-" + 12 alphanumeric chars                             |
-| `company_number`      | Provided by integrator       | Legal registration number (e.g., CNPJ or CRN)                         |
-| `mcc`                 | Provided by integrator       | Merchant Category Code (numeric)                                      |
-| `terminal_id`         | Provided by integrator       | Origin terminal ID                                                    |
 | `transaction_datetime`| Provided by integrator       | ISO 8601 format                                                        |
-| `transaction_id`      | Provided by integrator       | Unique identifier (ClearFund standard)                                |
+| `terminal_id`         | Provided by integrator       | Origin terminal ID                                                    |
 | `nsu`                 | Provided by integrator       | Acquirer transaction reference                                        |
 | `auth_code`           | Provided by acquirer         | Code confirming transaction approval                                  |
 | `currency_code`       | Provided by integrator       | ISO 4217 3-digit numeric code                                          |
 | `total_amount`        | Provided by integrator       | Full value of the transaction                                         |
+| `merchant_id`         | Provided by integrator       | Must follow "CF-" + 12 alphanumeric chars                             |
+| `company_number`      | Provided by integrator       | Legal registration number (e.g., CNPJ or CRN)                         |
+| `mcc`                 | Provided by integrator       | Merchant Category Code (numeric)                                      |
 | `fee_rate`            | System-defined               | **Must NOT be sent by integrator**                                    |
 | `instalment_count`    | Provided by integrator       | Number of instalments                                                 |
 | `instalment_amount`   | Provided or calculated       | Amount charged per instalment                                         |
@@ -35,6 +35,15 @@ This document describes the structure and purpose of each field used to register
 ---
 
 ## Core Transaction Data
+
+### Field: `transaction_id`
+**Description:**  
+ClearFund's internal ID to uniquely identify the transaction.  
+**Format:** Alphanumeric string starting with `"CF"`  
+**Example:** `"CF1234567890"`  
+**Note:** Replaces the traditional STAN (System Trace Audit Number).
+
+---
 
 ### Field: `mti`
 **Description:**  
@@ -67,54 +76,12 @@ Date and time of the transaction in [ISO 8601](https://en.wikipedia.org/wiki/ISO
 
 ---
 
-### Field: `transaction_id`
-**Description:**  
-ClearFund's internal ID to uniquely identify the transaction.  
-**Format:** Alphanumeric string starting with `"CF"`  
-**Example:** `"CF1234567890"`  
-**Note:** Replaces the traditional STAN (System Trace Audit Number).
-
----
-
-## 🧾 Merchant Information
-
-### Field: `merchant_id`
-**Description:**  
-Unique identifier assigned by ClearFund to the registered merchant.  
-**Format:** `"CF-"` + 12 alphanumeric characters  
-**Example:** `"CF-P6ON34OOW4"`  
-
-
----
-
-### Field: `company_number`
-**Description:**  
-Official business registration number of the merchant.  
-**Format:** Numeric only, without punctuation  
-**Examples:**
-- 🇧🇷 `12345678000199` (CNPJ – Brazil)
-- 🇮🇪 `635274` (Company Registration Number – Ireland)
-
----
-
-### Field: `mcc`
-**Description:**  
-Merchant Category Code (MCC) representing the type of business.  
-**Type:** `int` (must be numeric, 4 digits)  
-**Example:** `5411`  
-**Reference:** [ISO 18245 – MCC Documentation](https://en.wikipedia.org/wiki/Merchant_category_code)
-
----
-
 ### Field: `terminal_id`
 **Description:**  
 Code identifying the terminal or system that submitted the transaction.  
 **Example:** `"ABC12345"`
 
 ---
-
-## 💳 Transaction Details
-
 ### Field: `nsu`
 **Description:**  
 Unique transaction ID assigned by the acquirer.  
@@ -150,7 +117,34 @@ Full transaction value in the original currency.
 **Example:** `300.00`
 
 ---
+## 🧾 Merchant Information
 
+### Field: `merchant_id`
+**Description:**  
+Unique identifier assigned by ClearFund to the registered merchant.  
+**Format:** `"CF-"` + 12 alphanumeric characters  
+**Example:** `"CF-P6ON34OOW4"`  
+
+---
+
+### Field: `company_number`
+**Description:**  
+Official business registration number of the merchant.  
+**Format:** Numeric only, without punctuation  
+**Examples:**
+- 🇧🇷 `12345678000199` (CNPJ – Brazil)
+- 🇮🇪 `635274` (Company Registration Number – Ireland)
+
+---
+
+### Field: `mcc`
+**Description:**  
+Merchant Category Code (MCC) representing the type of business.  
+**Type:** `int` (must be numeric, 4 digits)  
+**Example:** `5411`  
+**Reference:** [ISO 18245 – MCC Documentation](https://en.wikipedia.org/wiki/Merchant_category_code)
+
+---
 ### Field: `fee_rate`
 **Description:**  
 Fee percentage applied based on merchant and brand profile.  
@@ -159,6 +153,8 @@ Fee percentage applied based on merchant and brand profile.
 **Important:** **This field must not be provided by the integrator.** It is managed internally by ClearFund and used for fee calculation.
 
 ---
+
+## 💳 Instalment Informations
 
 ### Field: `instalment_count`
 **Description:**  
@@ -175,6 +171,7 @@ Amount charged per instalment. Can be calculated as `total_amount ÷ instalment_
 **Example:** `100.00`
 
 ---
+## 💳 Card Information
 
 ### Field: `bin`
 **Description:**  
